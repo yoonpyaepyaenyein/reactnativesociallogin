@@ -1,7 +1,7 @@
-import {View, Text, StatusBar} from 'react-native';
+import {View, Text, StatusBar, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
-import {_signInWithGoogle} from '../../Config/auth';
+import {_signInWithGoogle, _signInWithFacebook} from '../../Config/auth';
 
 const AuthenticationScreen = ({navigation}) => {
   const signInWithGoogle = async () => {
@@ -13,6 +13,11 @@ const AuthenticationScreen = ({navigation}) => {
       .catch(error => {
         console.log('Error is ____', error);
       });
+  };
+
+  const signInWithFacebook = async () => {
+    let cred = await _signInWithFacebook();
+    console.log('cred=>', cred);
   };
 
   return (
@@ -29,6 +34,16 @@ const AuthenticationScreen = ({navigation}) => {
         animated={true}
       />
       <GoogleSigninButton onPress={() => signInWithGoogle()} />
+      <TouchableOpacity onPress={() => signInWithFacebook()}>
+        <Text
+          style={{
+            color: 'white',
+            backgroundColor: 'blue',
+            padding: 8,
+          }}>
+          SignIn With FaceBook
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
